@@ -9,21 +9,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150713161933) do
+ActiveRecord::Schema.define(:version => 20150716095923) do
 
-  create_table "invoices", :primary_key => "invoice_number", :force => true do |t|
-    t.date     "invoice_date",   :default => '2015-07-13'
+  create_table "invoices", :force => true do |t|
+    t.date     "invoice_date",   :default => '2015-07-20'
     t.string   "invoice_status", :default => "Due"
     t.float    "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "biller"
+    t.string   "customer"
   end
 
   create_table "items", :force => true do |t|
     t.integer  "quantity"
     t.float    "price"
     t.integer  "product_id"
-    t.string   "invoice_id"
+    t.integer  "invoice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -50,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20150713161933) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "roles"
-    t.boolean  "admin?",            :default => false
-    t.boolean  "enable?",           :default => false
+    t.boolean  "admin",             :default => false
+    t.boolean  "enable",            :default => false
     t.string   "address"
     t.string   "city"
     t.string   "state"

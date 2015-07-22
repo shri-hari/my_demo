@@ -1,0 +1,17 @@
+<div class= "container">
+<div><p> <h2>Product</h2></p></div>
+<div> 
+<% form_for @product do |f| %>
+<%= f.label 'Product Name:' %>
+<%= f.label @product.product_name %>
+<p>
+<%= f.label 'Product Description:' %>
+<%= f.label @product.product_description %>
+</p>
+<p>
+<%= f.label 'Unit Price:' %>
+<%= f.label @product.unit_price %>
+</p>
+<% end %>
+</div>
+</div>

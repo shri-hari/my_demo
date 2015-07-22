@@ -1,5 +1,9 @@
-<% form_for @user, :url => user_path(@user.id) do |f| %>
+<div class="container">
+<div><h3>Update your details</h3></div>
+<div>
+<% form_for @user, :url => user_path(@user.id) do |f|%>
 <%= f.error_messages %>
+
 <p>
     <%= f.label :address %><br />
     <%= f.text_field :address %>
@@ -22,3 +26,5 @@
 </p>
 <p><%= f.submit "Submit" %></p>
 <% end %>
+</div>
+</div>

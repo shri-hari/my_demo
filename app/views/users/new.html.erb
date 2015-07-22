@@ -1,4 +1,4 @@
-<% form_for @user do |f| %>
+<% form_for  @user do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :username %><br />
@@ -22,3 +22,4 @@
     <%= f.radio_button :roles, 'biller' %> Biller
   <p><%= f.submit "Submit" %></p>
 <% end %>
+ 

@@ -17,8 +17,7 @@ class UsersController < ApplicationController
       end
     else 
       if @user.save
-        flash[:notice] = "Please enter the below fields to complete registration."
-        user_id(@user.id)
+        
       else
         render :action => 'new'
       end
@@ -27,6 +26,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    render 'create'
   end
 
   def update
@@ -39,5 +39,40 @@ class UsersController < ApplicationController
     end
   end
 
-  
+  def index
+    @title = "Users"
+    if(request.url.include? "billers")
+       @title="Billers"
+       @users=User.find(:all,:conditions => {:roles => "biller"})
+    elsif (request.url.include? "customers")
+      @title="Customers"
+      @users=User.find(:all,:conditions => {:roles => "customer"})
+    elsif ((request.url.include? "users") && current_user.admin)     
+      @users= User.find(:all,:conditions => {:roles => "user",:admin => false})
+    else
+      flash[:notice] = "Not authorized for current user."
+      redirect_to root_url
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    User.delete(params[:id])
+    if@user.roles=="biller"
+      redirect_to billers_path
+    elsif @user.roles=="customer"
+      redirect_to customers_path
+    else
+      redirect_to users_path
+    end
+  end
+  before_filter :authenticate, :only=> [:edit,:update,:index]
+  before_filter :authorize,:only=>[:index]
+
+  def authorize
+      if current_user.roles != "user"
+        flash[:notice] = "Not A Authourized User!!"
+        redirect_to root_url
+      end
+  end
 end  

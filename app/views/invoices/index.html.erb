@@ -1,0 +1,44 @@
+<div class= "container">
+<div><p>
+<h3>All Invoices</h3>
+</p>
+</div>
+<div>
+<table class = "table table-hover ">
+<thead>
+<tr>
+	<th>Invoice ID</th>
+	<th>Invoice Date</th>
+	<% if current_user.roles == "user" || current_user.roles == "customer" %>
+	<th>Biller</th>
+	<% end %>
+	<% if current_user.roles == "user" || current_user.roles == "biller" %>
+	<th>Customer</th>
+	<% end %>
+	<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<% @invoices.each do |invoice| %>
+<tr>
+	<td><%= link_to (invoice.id),invoice_path(invoice.id) %></td>
+	<td><%= invoice.invoice_date %></td>
+	<% if current_user.roles == "user" || current_user.roles == "customer" %>
+	<td><%= invoice.biller %></td>
+	<% end %>
+	<% if current_user.roles == "user" || current_user.roles == "biller" %>
+	<td><%= invoice.customer %></td>
+	<% end %>
+	<td><%= invoice.invoice_status %></td>
+	<% if current_user.roles == "user" %>
+		<% if invoice.invoice_status != "paid" %>
+	<td><%= link_to "Change Status", invoice_path(invoice.id),:method => :put, class: 'btn btn-primary btn-sm'%></td>
+		<% else %>
+	<td><input type ="button" value="Paid" class="btn btn-primary btn-success" disabled=true /></td>
+		<% end %>
+	<% end %>
+</tr>
+<% end %>
+</tbody>
+</table>
+</div>

@@ -1,0 +1,47 @@
+<div class= "container">
+<div><p> <h2>Invoice <%= @invoice.id %></h2></p></div>
+<div> 
+<% form_for @invoice do |f| %>
+<%= f.label 'Invoice Date:' %>
+<%= f.label @invoice.invoice_date %>
+<p>
+<%= f.label 'Biller:' %>
+<%= f.label @invoice.biller %>
+</p>
+<p>
+<%= f.label 'Customer:' %>
+<%= f.label @invoice.customer %>
+</p>
+<p>
+<%= f.label 'Items' %>
+</p>
+<table  id ="table" class = "table table-hover">
+<thead>
+<tr>
+	<th>Product</th>
+	<th>Quantity</th>
+	<th>Price</th>
+</tr>
+</thead>
+<tbody>
+<% @items.each do |item| %>
+<tr id="first">
+	
+	<td><%= item.product.product_name %></td>
+	<td><%= item.quantity %></td>
+	<td>$<%= item.price %></td>	
+	
+</tr>
+<% end %>
+</tbody>
+</table>
+<p>
+<%= f.label 'Total Amount:' %>
+<%= f.label @invoice.amount %>
+</p>
+<p>
+<%= f.label 'Invoice Status:' %>
+<%= f.label @invoice.invoice_status %>
+<% end %>
+</div>
+</div>

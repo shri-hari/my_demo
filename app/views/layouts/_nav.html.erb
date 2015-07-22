@@ -1,0 +1,41 @@
+<div id="header_tab">
+<% if current_user %>
+  <ul id="tabs" class= 'nav nav-tabs'>  
+      <% if current_user.roles == "user" %>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" >Money<span class="caret"></span></a>
+        <ul class= "dropdown-menu">
+        <li><%= link_to "Invoices",invoices_path %></li>
+        <li><%= link_to "New Invoice",new_invoice_path %></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" >Products <span class="caret"></span></a>
+      <ul class= "dropdown-menu">
+        <li><%= link_to "New Product",new_product_path %></li>
+        <li><%= link_to "Manage Product",products_path %></li>
+      </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" >People <span class="caret"></span></a>
+        <ul class= "dropdown-menu">
+          <li><%= link_to "Customers",customers_path %></li>
+          <li><%= link_to "Billers",billers_path %></li>
+          <% if current_user.admin %>
+          <li><%= link_to "Users",users_path %></li>
+          <%end%>
+      </ul>
+      </li>
+      <% elsif current_user.roles == 'biller' || current_user.roles == 'customer' && !(request.url =~ /users/i) %>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" >View<span class="caret"></span></a>
+        <ul class= "dropdown-menu">
+        <% if current_user.roles == "biller" %>
+        <li><%= link_to "Invoices",biller_invoices_path %></li>
+        <% else %>
+        <li><%= link_to "Invoices",customer_invoices_path %></li>
+        <% end %>
+        <li><%= link_to "Update Profile",edit_user_path(:current) %></li>
+        </ul>
+      <%end%>     
+</ul>
+<% else %>
+<% end %>
+
+ 

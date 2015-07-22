@@ -1,0 +1,80 @@
+<script>
+$(document).ready(function(){	
+$("#item__product_id").change(function(){
+	
+	$(this).parents('td').next().children().val($(this).val());
+});
+var tot;
+	$("#item__quantity").change(function(){
+		$(this).parents("td").next().children().attr('value', $(this).closest('td').prev().children().children('option:selected').text()* $(this).val());
+		tot =0;
+
+	$('.add').each(function(){
+		tot= tot+parseInt($(this).val());
+		});
+	$(".amount").attr("value",tot);
+
+});
+
+$("#addrow").click(function(){
+	var x=Math.floor(Math.random()*100)+1;
+	$("#first").clone(true).attr("id",x).appendTo("table#table tbody");
+	$("#"+x+" td:nth-child(4)").children().attr("value","");
+});
+});
+</script>
+<div class='container'>
+<div><h3>New Invoice</h3></div>
+<div>
+<% form_for @invoice do |f| %>
+<p>
+<%= f.error_messages %>
+</p> 
+<p>
+<%= f.label "Invoice Date:" %>
+<%= f.text_field :invoice_date, :value => Time.now().strftime('%F') %>
+</p>
+<p>
+<%= f.label "Biller :" %>
+<%= f.select :biller, options_for_select(@billers.collect{|b| [b.username]}) %>
+</p>
+<%= f.label "Customer :" %>
+<%= f.select :customer, options_for_select(@customers.collect{|b| [b.username]}) %>
+</p>
+<p>
+<%= f.label "Items" %>
+</p>
+<p>
+<div>
+<table  id ="table" class = "table table-hover">
+<thead>
+<tr>
+	<th>Product</th>
+	<th>Quantity</th>
+	<th>Price</th>
+</tr>
+</thead>
+<% fields_for @item do |item_field| %>
+<tbody>
+<tr id="first">
+	<td><%= select_tag "item[][product_id]",options_for_select(@products.collect{|p| [p.product_name,p.id]}),:include_blank => "Products" %></td>
+	<td hidden><%= select_tag "unit_price",options_for_select(@products.collect{|p| [p.unit_price,p.id]},{}) %></td>
+	<td><%= select_tag "item[][quantity]", options_for_select((1..100)),{:include_blank=>true}%></td>
+	<td><%= text_field_tag "item[][price]","",class: 'add' %></td>		
+</tr>
+</tbody>
+<% end %>
+</table>
+</p>
+<p>
+<%= f.label "Total Price" %>
+<%= f.text_field :amount ,class: 'amount'%>
+</p>
+<p>
+<a href="#" id="addrow" class="btn btn-primary btn-sm" >Add Row</a>
+</p>
+<%= f.submit "Create" %>
+</p> 
+<% end %>
+</div>
+</div>

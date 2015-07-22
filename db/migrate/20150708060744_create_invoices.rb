@@ -1,7 +1,6 @@
 class CreateInvoices < ActiveRecord::Migration
   def self.up
-    create_table :invoices, {:id => false} do  |t|
-      t.string :invoice_number, :limit => 10
+    create_table :invoices do  |t|
       t.date :invoice_date, :default => Date.today
       t.string :invoice_status, :default => "Due"
       t.float :amount
@@ -9,7 +8,6 @@ class CreateInvoices < ActiveRecord::Migration
 
       t.timestamps
     end
-    execute "ALTER TABLE invoices ADD PRIMARY KEY (invoice_number);"
   end
 
   def self.down

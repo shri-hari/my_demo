@@ -1,0 +1,11 @@
+$(document).ready(function(){
+$("#addrow").click(function(){
+
+	$("table#table tbody").append(/*'<tr>'+<% fields_for :item do |item_field| %>+
+	'<td>'+<%= item_field.select  :product_id,@products.collect{|p| [p.product_name,p.id]},:include_blank => true%>+'</td>'+
+	'<td hidden>'+<%= item_field.select :unit_price,@products.collect{|p| [p.unit_price,p.id]} %>+'</td>'+
+	'<td>'+<%= item_field.select :quantity, options_for_select((1..100)),:include_blank=>true %>+'</td>'+
+	'<td>'+<%= item_field.text_field :price  %>+'</td>'+<% end %>+'</tr>'*/
+	);
+});
+});
